@@ -3,21 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadoras de Exposição e Potência</title>
+    <title>Calculadoras de Insalubridade e Potência</title>
     <style>
+        /* Estilo do corpo e fundo da página */
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1e1e2f, #3b1c52, #1e1e2f);
+            background-size: 200% 200%;
+            animation: backgroundAnimation 15s ease infinite;
+            color: white;
         }
+
+        /* Animação para o fundo */
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Estilo das calculadoras */
         .calculator {
             margin-bottom: 30px;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.7);
+            width: 300px;
         }
         .calculator h2 {
             margin-top: 0;
+            text-align: center;
         }
         .input-group {
             margin-bottom: 10px;
@@ -30,24 +52,69 @@
             width: 100%;
             padding: 8px;
             box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+        }
+        .input-group input::placeholder {
+            color: #ccc;
         }
         .result {
             margin-top: 10px;
             font-weight: bold;
+            text-align: center;
+        }
+
+        /* Estilo das estrelas */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .stars::after {
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            background: white;
+            box-shadow: 0 0 2px 2px white, 
+                        100px 100px 2px 2px white,
+                        200px 200px 2px 2px white,
+                        300px 300px 2px 2px white,
+                        400px 400px 2px 2px white;
+            animation: starAnimation 50s linear infinite;
+        }
+
+        /* Animação para as estrelas */
+        @keyframes starAnimation {
+            from { transform: translateY(0); }
+            to { transform: translateY(-2000px); }
         }
     </style>
 </head>
 <body>
+    <div class="stars"></div>
+
+    <!-- Calculadora de Insalubridade -->
     <div class="calculator">
-        <h2>Calculadora de Tempo Máximo de Exposição ao Som</h2>
+        <h2>Calculadora de Insalubridade</h2>
+        <div class="input-group">
+            <label for="tempo">Insira o tempo de exposição (em horas):</label>
+            <input type="number" id="tempo" placeholder="Ex: 2">
+        </div>
         <div class="input-group">
             <label for="db">Insira o nível de decibéis (dB):</label>
             <input type="number" id="db" placeholder="Ex: 85">
         </div>
-        <button onclick="calcularTempo()">Calcular Tempo Máximo</button>
-        <div id="tempoResultado" class="result"></div>
+        <button onclick="calcularInsalubridade()">Verificar Insalubridade</button>
+        <div id="insalubridadeResultado" class="result"></div>
     </div>
 
+    <!-- Calculadora de Potência com Base na Lei de Ohm -->
     <div class="calculator">
         <h2>Calculadora de Potência com Base na Lei de Ohm</h2>
         <div class="input-group">
@@ -63,25 +130,26 @@
     </div>
 
     <script>
-        function calcularTempo() {
-            const db = document.getElementById('db').value;
-            let tempoMaximo;
+        // Função para verificar se a atividade é insalubre com base no tempo e nos dB
+        function calcularInsalubridade() {
+            const tempo = parseFloat(document.getElementById('tempo').value);
+            const db = parseFloat(document.getElementById('db').value);
+            let resultado;
 
-            if (db <= 85) {
-                tempoMaximo = "8 horas";
-            } else if (db <= 90) {
-                tempoMaximo = "2 horas";
-            } else if (db <= 95) {
-                tempoMaximo = "1 hora";
-            } else if (db <= 100) {
-                tempoMaximo = "15 minutos";
+            // Lógica para determinar se é insalubre
+            if ((db >= 85 && tempo >= 8) || 
+                (db >= 90 && tempo >= 2) || 
+                (db >= 95 && tempo >= 1) || 
+                (db >= 100 && tempo >= 0.25)) {
+                resultado = "Atividade Insalubre!";
             } else {
-                tempoMaximo = "Perigoso! Evite exposição";
+                resultado = "Atividade Adequada.";
             }
 
-            document.getElementById('tempoResultado').textContent = `Tempo máximo de exposição: ${tempoMaximo}`;
+            document.getElementById('insalubridadeResultado').textContent = resultado;
         }
 
+        // Função para calcular a potência com base na Lei de Ohm
         function calcularPotencia() {
             const tensao = document.getElementById('tensao').value;
             const corrente = document.getElementById('corrente').value;
