@@ -5,30 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadoras de Insalubridade e Potência</title>
     <style>
-        /* Estilo do corpo e fundo da página */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             background: linear-gradient(135deg, #1e1e2f, #3b1c52, #1e1e2f);
             background-size: 200% 200%;
             animation: backgroundAnimation 15s ease infinite;
             color: white;
+            padding-top: 20px;
         }
 
-        /* Animação para o fundo */
         @keyframes backgroundAnimation {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* Estilo do título */
         h1 {
             text-align: center;
             font-size: 2.5rem;
@@ -36,7 +34,6 @@
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
 
-        /* Estilo das calculadoras */
         .calculator {
             margin-bottom: 20px;
             padding: 20px;
@@ -74,7 +71,6 @@
             text-align: center;
         }
 
-        /* Estilo das estrelas */
         .stars {
             position: absolute;
             width: 100%;
@@ -98,7 +94,6 @@
             animation: starAnimation 50s linear infinite;
         }
 
-        /* Animação para as estrelas */
         @keyframes starAnimation {
             from { transform: translateY(0); }
             to { transform: translateY(-2000px); }
@@ -108,10 +103,8 @@
 <body>
     <div class="stars"></div>
 
-    <!-- Título centralizado -->
     <h1>Seja bem-vindo</h1>
 
-    <!-- Calculadora de Insalubridade -->
     <div class="calculator">
         <h2>Calculadora de Insalubridade</h2>
         <div class="input-group">
@@ -126,7 +119,6 @@
         <div id="insalubridadeResultado" class="result"></div>
     </div>
 
-    <!-- Calculadora de Potência com Base na Lei de Ohm -->
     <div class="calculator">
         <h2>Calculadora de Potência com Base na Lei de Ohm</h2>
         <div class="input-group">
@@ -141,14 +133,17 @@
         <div id="potenciaResultado" class="result"></div>
     </div>
 
+    <div class="calculator">
+        <h2>Importância das Normas da NR-15</h2>
+        <p>A NR-15 estabelece os critérios para atividades insalubres, definindo os limites de tolerância para exposição a agentes nocivos, como ruído, calor, radiações e substâncias químicas. A importância da NR-15 está na proteção da saúde dos trabalhadores ao regular as condições de trabalho, evitando a exposição prolongada a condições que possam causar doenças ocupacionais. O cumprimento da NR-15 é crucial para a segurança no ambiente de trabalho e para a redução de riscos de acidentes e danos à saúde dos colaboradores.</p>
+    </div>
+
     <script>
-        // Função para verificar se a atividade é insalubre com base no tempo e nos dB
         function calcularInsalubridade() {
             const tempo = parseFloat(document.getElementById('tempo').value);
             const db = parseFloat(document.getElementById('db').value);
             let resultado;
 
-            // Lógica para determinar se é insalubre
             if ((db >= 85 && tempo >= 8.1) || 
                 (db >= 90 && tempo >= 4.1) || 
                 (db >= 95 && tempo >= 2.1) || 
@@ -161,7 +156,6 @@
             document.getElementById('insalubridadeResultado').textContent = resultado;
         }
 
-        // Função para calcular a potência com base na Lei de Ohm
         function calcularPotencia() {
             const tensao = document.getElementById('tensao').value;
             const corrente = document.getElementById('corrente').value;
